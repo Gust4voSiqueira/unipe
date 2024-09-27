@@ -36,6 +36,7 @@ public class User implements UserDetails {
     private String email;
     @JsonIgnore
     private String password;
+    private String course;
 
     private Role role;
 
@@ -44,6 +45,7 @@ public class User implements UserDetails {
                 .email(registerDTO.email())
                 .role(Role.USER)
                 .password(passwordEncoded)
+                .course(registerDTO.course())
                 .build();
     }
 
