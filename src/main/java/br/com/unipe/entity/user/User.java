@@ -43,6 +43,7 @@ public class User implements UserDetails {
     public static User fromRegisterDTO(RegisterDTO registerDTO, String passwordEncoded) {
         return User.builder()
                 .email(registerDTO.email())
+                .name(registerDTO.name())
                 .role(Role.USER)
                 .password(passwordEncoded)
                 .course(registerDTO.course())

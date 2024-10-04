@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class GetItemsResponse {
     private String item;
     private String local;
-    private String numberContact;
+    private String phone;
     private String observation;
 
     public static GetItemsResponse fromItem(Item item) {
@@ -21,7 +21,7 @@ public class GetItemsResponse {
                 .item(item.getName())
                 .local(item.getLocal())
                 .observation(item.getObservation())
-                .numberContact(item.getNumberContact())
+                .phone(item.getPhone())
                 .build();
     }
 }
