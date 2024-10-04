@@ -29,7 +29,7 @@ public class Item {
     private String name;
     private String local;
     private String observation;
-    private String numberContact;
+    private String phone;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -39,7 +39,7 @@ public class Item {
                 .name(createItemRequest.item())
                 .local(createItemRequest.local())
                 .observation(createItemRequest.observation())
-                .numberContact(createItemRequest.numberContact())
+                .phone(createItemRequest.phone())
                 .user(user)
                 .build();
     }
