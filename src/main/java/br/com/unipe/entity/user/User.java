@@ -32,6 +32,7 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String phone;
     @Column(unique = true)
     private String email;
     @JsonIgnore
@@ -44,6 +45,7 @@ public class User implements UserDetails {
         return User.builder()
                 .email(registerDTO.email())
                 .name(registerDTO.name())
+                .phone(registerDTO.phone())
                 .role(Role.USER)
                 .password(passwordEncoded)
                 .course(registerDTO.course())

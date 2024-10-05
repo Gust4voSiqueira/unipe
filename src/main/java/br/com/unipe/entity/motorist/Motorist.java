@@ -42,7 +42,7 @@ public class Motorist {
 
     public static Motorist fromCreateMotoristRequest(CreateMotoristRequest createMotoristRequest, User user) {
         return Motorist.builder()
-                .phone(createMotoristRequest.phone())
+                .phone(user.getPhone())
                 .name(user.getName())
                 .city(createMotoristRequest.city())
                 .neighborhood(createMotoristRequest.neighborhood())
