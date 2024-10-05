@@ -19,6 +19,8 @@ public class GetMotoristResponse {
     private String neighborhood;
     private String car;
     private String plate;
+    private Integer quantityVacancies;
+    private String observation;
     private List<String> availableDays;
 
 
@@ -31,6 +33,8 @@ public class GetMotoristResponse {
                 .car(motorist.getCar())
                 .plate(motorist.getPlate())
                 .availableDays(motorist.getAvailableDays())
+                .quantityVacancies(motorist.getQuantityVacancies())
+                .observation(motorist.getObservation())
                 .build();
     }
 

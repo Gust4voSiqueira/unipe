@@ -14,9 +14,11 @@ public class MyUserResponse {
     private String dateNow;
 
     public static MyUserResponse fromUser(String name, int day, String month, int year) {
+        var capitalizedMonth = month.substring(0, 1).toUpperCase() + month.substring(1).toLowerCase();
+
         return MyUserResponse.builder()
                 .name(name)
-                .dateNow(day + " " + month + " " + year)
+                .dateNow(day + " " + capitalizedMonth + " " + year)
                 .build();
     }
 }

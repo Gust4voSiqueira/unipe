@@ -34,6 +34,8 @@ public class Motorist {
     private String neighborhood;
     private String car;
     private String plate;
+    private Integer quantityVacancies;
+    private String observation;
 
     @ElementCollection
     @CollectionTable(name = "user_available_days", joinColumns = @JoinColumn(name = "user_id"))
@@ -49,6 +51,8 @@ public class Motorist {
                 .car(createMotoristRequest.car())
                 .plate(createMotoristRequest.plate())
                 .availableDays(createMotoristRequest.days())
+                .quantityVacancies(createMotoristRequest.quantityVacancies())
+                .observation(createMotoristRequest.observation())
                 .build();
     }
 }
