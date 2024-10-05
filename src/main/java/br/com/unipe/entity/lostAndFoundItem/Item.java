@@ -39,7 +39,7 @@ public class Item {
                 .name(createItemRequest.item())
                 .local(createItemRequest.local())
                 .observation(createItemRequest.observation())
-                .phone(createItemRequest.phone())
+                .phone(user.getPhone())
                 .user(user)
                 .build();
     }
