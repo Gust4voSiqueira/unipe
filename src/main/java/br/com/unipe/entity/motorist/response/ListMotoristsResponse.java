@@ -13,12 +13,14 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 public class ListMotoristsResponse {
+    private Long id;
     private String name;
     private String neighborhood;
     private List<String> availableDays;
 
     public static ListMotoristsResponse fromMotorist(Motorist motorist) {
         return ListMotoristsResponse.builder()
+                .id(motorist.getId())
                 .name(motorist.getName())
                 .neighborhood(motorist.getNeighborhood())
                 .availableDays(motorist.getAvailableDays())
