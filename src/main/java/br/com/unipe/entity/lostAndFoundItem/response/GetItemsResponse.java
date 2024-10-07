@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class GetItemsResponse {
+    private Long id;
     private String item;
     private String local;
     private String phone;
@@ -18,6 +19,7 @@ public class GetItemsResponse {
 
     public static GetItemsResponse fromItem(Item item, Boolean isAddedByCurrentUser) {
         return GetItemsResponse.builder()
+                .id(item.getId())
                 .item(item.getName())
                 .local(item.getLocal())
                 .phone(item.getPhone())
