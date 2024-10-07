@@ -2,6 +2,7 @@ package br.com.unipe.controller;
 
 import br.com.unipe.entity.motorist.request.CreateMotoristRequest;
 import br.com.unipe.entity.motorist.response.GetMotoristResponse;
+import br.com.unipe.entity.motorist.response.IsExistsMotoristRegistered;
 import br.com.unipe.entity.motorist.response.ListMotoristsResponse;
 import br.com.unipe.entity.user.User;
 import br.com.unipe.service.MotoristService;
@@ -44,9 +45,22 @@ public class MotoristController {
     }
 
     @GetMapping("getMotorist/{idMotorist}")
-    public ResponseEntity<GetMotoristResponse> createMotorist(@PathVariable Long idMotorist) {
+    public ResponseEntity<GetMotoristResponse> getDetailsMotorist(@PathVariable Long idMotorist) {
         try {
-            return ResponseEntity.ok().body(motoristService.getMotorist(idMotorist));
+            return ResponseEntity.ok().body(motoristService.getDetailsMotorist(idMotorist));
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @GetMapping("isExistsCarRegistered")
+    public ResponseEntity<IsExistsMotoristRegistered> isExistsCarRegistered() {
+        try {
+            User user = (User) SecurityContextHolder.getContext()
+                    .getAuthentication()
+                    .getPrincipal();
+
+            return ResponseEntity.ok().body(motoristService.isExistsCarRegistered(user.getId()));
         } catch (RuntimeException e) {
             throw new RuntimeException(e.getMessage());
         }
