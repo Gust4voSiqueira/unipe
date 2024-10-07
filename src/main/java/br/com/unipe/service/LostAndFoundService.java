@@ -27,7 +27,10 @@ public class LostAndFoundService {
         Pageable pageable = PageRequest.of(0, 30);
         var response = itemRepository.findAllItemsOrderedByUser(userId, pageable);
 
-        return response.stream().map(GetItemsResponse::fromItem).collect(Collectors.toList());
+        return response.stream().map(item -> {
+            var isAddedByCurrentUser = item.getUser().getId().equals(userId);
+            return GetItemsResponse.fromItem(item, isAddedByCurrentUser);
+        }).collect(Collectors.toList());
     }
 
     public void createItem(CreateItemRequest createItemRequest, Long userId) {

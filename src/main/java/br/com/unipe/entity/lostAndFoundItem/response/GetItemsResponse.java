@@ -14,14 +14,14 @@ public class GetItemsResponse {
     private String item;
     private String local;
     private String phone;
-    private String observation;
+    private Boolean isAddedByCurrentUser;
 
-    public static GetItemsResponse fromItem(Item item) {
+    public static GetItemsResponse fromItem(Item item, Boolean isAddedByCurrentUser) {
         return GetItemsResponse.builder()
                 .item(item.getName())
                 .local(item.getLocal())
-                .observation(item.getObservation())
                 .phone(item.getPhone())
+                .isAddedByCurrentUser(isAddedByCurrentUser)
                 .build();
     }
 }

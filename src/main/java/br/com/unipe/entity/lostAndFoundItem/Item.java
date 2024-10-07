@@ -28,7 +28,6 @@ public class Item {
     private Long id;
     private String name;
     private String local;
-    private String observation;
     private String phone;
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -38,7 +37,6 @@ public class Item {
         return Item.builder()
                 .name(createItemRequest.item())
                 .local(createItemRequest.local())
-                .observation(createItemRequest.observation())
                 .phone(user.getPhone())
                 .user(user)
                 .build();
