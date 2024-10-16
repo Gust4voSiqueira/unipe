@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class ListPetsResponse {
+    private Long id;
     private String pet;
     private String description;
     private String phone;
@@ -18,6 +19,7 @@ public class ListPetsResponse {
 
     public static ListPetsResponse fromPet(Pet pet, boolean isAddedByCurrentUser) {
         return ListPetsResponse.builder()
+                .id(pet.getId())
                 .pet(pet.getPet())
                 .description(pet.getDescription())
                 .phone(pet.getUser().getPhone())
