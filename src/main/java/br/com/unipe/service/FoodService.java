@@ -4,7 +4,6 @@ import br.com.unipe.entity.ifood.request.InsertFoodRequest;
 import br.com.unipe.entity.ifood.response.ListFoodsResponse;
 import br.com.unipe.exceptions.FoodNotFoundException;
 import br.com.unipe.exceptions.ItemNotFoundException;
-import br.com.unipe.exceptions.PetNotFoundException;
 import br.com.unipe.exceptions.UnauthorizedItemDeletionException;
 import br.com.unipe.exceptions.UnauthorizedProductUpdateException;
 import br.com.unipe.exceptions.UserNotFoundException;
