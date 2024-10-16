@@ -40,9 +40,7 @@ public class PetController {
                 .getAuthentication()
                 .getPrincipal();
 
-        petService.listPets(user.getId());
-
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(petService.listPets(user.getId()));
     }
 
     @DeleteMapping("/delete/{petId}")
