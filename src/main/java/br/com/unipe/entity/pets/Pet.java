@@ -1,6 +1,6 @@
-package br.com.unipe.entity.lostAndFoundItem;
+package br.com.unipe.entity.pets;
 
-import br.com.unipe.entity.lostAndFoundItem.request.CreateItemRequest;
+import br.com.unipe.entity.pets.request.InsertPetRequest;
 import br.com.unipe.entity.user.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,7 +8,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,21 +20,21 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "LostAndFoundItem")
-public class Item {
+public class Pet {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String local;
+    private String pet;
+    private String description;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    public static Item fromCreateItemRequest(CreateItemRequest createItemRequest, User user) {
-        return Item.builder()
-                .name(createItemRequest.item())
-                .local(createItemRequest.local())
+    public static Pet fromInsertPetRequest(InsertPetRequest insertPetRequest, User user) {
+        return Pet.builder()
+                .pet(insertPetRequest.getPet())
+                .description(insertPetRequest.getDescription())
                 .user(user)
                 .build();
     }
