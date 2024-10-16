@@ -22,7 +22,7 @@ public class GetItemsResponse {
                 .id(item.getId())
                 .item(item.getName())
                 .local(item.getLocal())
-                .phone(item.getPhone())
+                .phone(item.getUser().getPhone())
                 .isAddedByCurrentUser(isAddedByCurrentUser)
                 .build();
     }

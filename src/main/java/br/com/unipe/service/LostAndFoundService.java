@@ -30,7 +30,7 @@ public class LostAndFoundService {
         return response.stream().map(item -> {
             var isAddedByCurrentUser = item.getUser().getId().equals(userId);
             return GetItemsResponse.fromItem(item, isAddedByCurrentUser);
-        }).collect(Collectors.toList());
+        }).toList();
     }
 
     public void createItem(CreateItemRequest createItemRequest, Long userId) {
