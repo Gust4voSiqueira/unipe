@@ -21,7 +21,7 @@ import java.util.List;
 @RequestMapping("pet")
 @RequiredArgsConstructor
 public class PetController {
-    PetService petService;
+    private final PetService petService;
 
     @PostMapping("insert")
     public ResponseEntity insertPet(@RequestBody InsertPetRequest insertPetRequest) {
