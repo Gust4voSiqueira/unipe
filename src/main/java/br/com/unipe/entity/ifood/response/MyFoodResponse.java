@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class MyFoodResponse {
     private Boolean isExistsFood;
     private Long id;
+    private String food;
     private Boolean isOnline;
 
     public static MyFoodResponse fromFoodIsNotExists() {
@@ -25,6 +26,7 @@ public class MyFoodResponse {
         return MyFoodResponse.builder()
                 .isExistsFood(true)
                 .id(food.getId())
+                .food(food.getFood())
                 .isOnline(food.getIsOnline())
                 .build();
     }
