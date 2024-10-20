@@ -2,6 +2,7 @@ package br.com.unipe.service;
 
 import br.com.unipe.entity.ifood.request.InsertFoodRequest;
 import br.com.unipe.entity.ifood.response.ListFoodsResponse;
+import br.com.unipe.entity.ifood.response.MyFoodResponse;
 import br.com.unipe.exceptions.FoodNotFoundException;
 import br.com.unipe.exceptions.ItemNotFoundException;
 import br.com.unipe.exceptions.UnauthorizedItemDeletionException;
@@ -18,12 +19,27 @@ import java.util.List;
 import static br.com.unipe.entity.ifood.Food.fromInsertFoodRequest;
 import static br.com.unipe.entity.ifood.Food.updateStatusFood;
 import static br.com.unipe.entity.ifood.response.ListFoodsResponse.fromFood;
+import static br.com.unipe.entity.ifood.response.MyFoodResponse.fromFoodIsExistsFood;
+import static br.com.unipe.entity.ifood.response.MyFoodResponse.fromFoodIsNotExists;
 
 @Service
 @RequiredArgsConstructor
 public class FoodService {
     private final FoodRepository foodRepository;
     private final UserRepository userRepository;
+
+    public MyFoodResponse myFood(Long userId) {
+        var user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("Usuário não encontrado."));
+
+        var food = foodRepository.findByUser(user);
+
+        if(food.isEmpty()) {
+            return fromFoodIsNotExists();
+        }
+
+        return fromFoodIsExistsFood(food.get());
+    }
 
     public void insertFood(InsertFoodRequest insertFoodRequest, Long userId) {
         var user = userRepository.findById(userId)

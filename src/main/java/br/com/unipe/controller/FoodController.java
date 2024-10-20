@@ -2,6 +2,7 @@ package br.com.unipe.controller;
 
 import br.com.unipe.entity.ifood.request.InsertFoodRequest;
 import br.com.unipe.entity.ifood.response.ListFoodsResponse;
+import br.com.unipe.entity.ifood.response.MyFoodResponse;
 import br.com.unipe.entity.user.User;
 import br.com.unipe.service.FoodService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FoodController {
     private final FoodService foodService;
+
+    @GetMapping("myFood")
+    public ResponseEntity<MyFoodResponse> getMyFood() {
+        User user = (User) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        return ResponseEntity.ok().body(foodService.myFood(user.getId()));
+    }
 
     @GetMapping
     public ResponseEntity<List<ListFoodsResponse>> listFoods() {
