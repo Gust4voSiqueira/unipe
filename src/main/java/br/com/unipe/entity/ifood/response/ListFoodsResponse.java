@@ -14,6 +14,7 @@ import java.util.List;
 @Getter
 public class ListFoodsResponse {
     private String food;
+    private Long id;
     private List<String> availableDays;
     private Boolean isAddedByCurrentUser;
     private Boolean isOnline;
@@ -22,6 +23,7 @@ public class ListFoodsResponse {
     public static ListFoodsResponse fromFood(Food food, boolean isAddedByCurrentUser) {
         return ListFoodsResponse.builder()
                 .food(food.getFood())
+                .id(food.getId())
                 .availableDays(food.getAvailableDays())
                 .isAddedByCurrentUser(isAddedByCurrentUser)
                 .phone(food.getUser().getPhone())
