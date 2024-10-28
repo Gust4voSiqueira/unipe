@@ -29,11 +29,6 @@ public class MotoristService {
 
     public void createMotorist(CreateMotoristRequest createMotoristRequest, User user) {
         var motorist = fromCreateMotoristRequest(createMotoristRequest, user);
-        var isExistsMotoristRegistered = motoristRepository.existsById(motorist.getId());
-
-        if(isExistsMotoristRegistered) {
-            throw new RuntimeException("Você só pode cadastrar um veículo.");
-        }
 
         motoristRepository.save(motorist);
     }
