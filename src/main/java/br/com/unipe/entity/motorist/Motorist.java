@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,6 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Builder
@@ -28,8 +30,6 @@ public class Motorist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String phone;
     private String city;
     private String neighborhood;
     private String car;
@@ -42,10 +42,13 @@ public class Motorist {
     @Column(name = "days")
     private List<String> availableDays;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public static Motorist fromCreateMotoristRequest(CreateMotoristRequest createMotoristRequest, User user) {
         return Motorist.builder()
-                .phone(user.getPhone())
-                .name(user.getName())
+                .user(user)
                 .city(createMotoristRequest.city())
                 .neighborhood(createMotoristRequest.neighborhood())
                 .car(createMotoristRequest.car())
@@ -54,5 +57,26 @@ public class Motorist {
                 .quantityVacancies(createMotoristRequest.quantityVacancies())
                 .observation(createMotoristRequest.observation())
                 .build();
+    }
+
+    public static Motorist fromUpdateMotorist(Motorist motorist, CreateMotoristRequest createMotoristRequest) {
+        var motoristUpdated = Motorist.builder()
+                .id(motorist.id)
+                .user(motorist.user)
+                .city(Objects.requireNonNullElse(createMotoristRequest.city(), motorist.city))
+                .neighborhood(Objects.requireNonNullElse(createMotoristRequest.neighborhood(), motorist.neighborhood))
+                .car(Objects.requireNonNullElse(createMotoristRequest.car(), motorist.car))
+                .plate(Objects.requireNonNullElse(createMotoristRequest.plate(), motorist.plate))
+                .quantityVacancies(Objects.requireNonNullElse(createMotoristRequest.quantityVacancies(), motorist.quantityVacancies))
+                .observation(Objects.requireNonNullElse(createMotoristRequest.observation(), motorist.observation))
+                .availableDays(motorist.availableDays)
+                .build();
+
+        if (Objects.nonNull(createMotoristRequest.days())) {
+            motorist.getAvailableDays().clear();
+            motorist.getAvailableDays().addAll(createMotoristRequest.days());
+        }
+
+        return motoristUpdated;
     }
 }

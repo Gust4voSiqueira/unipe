@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 public class GetMotoristResponse {
+    private Long id;
     private String name;
     private String phone;
     private String city;
@@ -26,8 +27,9 @@ public class GetMotoristResponse {
 
     public static GetMotoristResponse fromMotorist(Motorist motorist) {
         return GetMotoristResponse.builder()
-                .name(motorist.getName())
-                .phone(motorist.getPhone())
+                .id(motorist.getId())
+                .name(motorist.getUser().getName())
+                .phone(motorist.getUser().getPhone())
                 .city(motorist.getCity())
                 .neighborhood(motorist.getNeighborhood())
                 .car(motorist.getCar())

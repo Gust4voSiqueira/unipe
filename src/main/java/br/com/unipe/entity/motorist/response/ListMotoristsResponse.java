@@ -21,7 +21,7 @@ public class ListMotoristsResponse {
     public static ListMotoristsResponse fromMotorist(Motorist motorist) {
         return ListMotoristsResponse.builder()
                 .id(motorist.getId())
-                .name(motorist.getName())
+                .name(motorist.getUser().getName())
                 .neighborhood(motorist.getNeighborhood())
                 .availableDays(motorist.getAvailableDays())
                 .build();
