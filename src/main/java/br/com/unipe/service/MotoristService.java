@@ -5,6 +5,7 @@ import br.com.unipe.entity.motorist.response.GetMotoristResponse;
 import br.com.unipe.entity.motorist.response.IsExistsMotoristRegistered;
 import br.com.unipe.entity.motorist.response.ListMotoristsResponse;
 import br.com.unipe.entity.user.User;
+import br.com.unipe.exceptions.UnauthorizedItemDeletionException;
 import br.com.unipe.exceptions.UserNotFoundException;
 import br.com.unipe.repository.MotoristRepository;
 import br.com.unipe.repository.UserRepository;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static br.com.unipe.entity.motorist.Motorist.fromCreateMotoristRequest;
+import static br.com.unipe.entity.motorist.Motorist.fromUpdateMotorist;
 import static br.com.unipe.entity.motorist.response.GetMotoristResponse.fromMotorist;
 import static br.com.unipe.entity.motorist.response.IsExistsMotoristRegistered.fromExistsMotoristRegistered;
 import static br.com.unipe.entity.motorist.response.IsExistsMotoristRegistered.fromNotExistsMotoristRegistered;
@@ -45,12 +47,39 @@ public class MotoristService {
     }
 
     public IsExistsMotoristRegistered isExistsCarRegistered(Long idMotorist) {
-        var motorist = motoristRepository.findById(idMotorist);
+        var user = userRepository.findById(idMotorist)
+                .orElseThrow(() -> new UserNotFoundException("Usuário não encontrado."));
+
+        var motorist = motoristRepository.findByUser(user);
 
         if(motorist.isEmpty()) {
             return fromNotExistsMotoristRegistered();
         }
 
         return fromExistsMotoristRegistered(motorist.get());
+    }
+
+    public void deleteMotorist(Long idMotorist, Long userId) {
+        var motorist = motoristRepository.findById(idMotorist)
+                .orElseThrow(() -> new UserNotFoundException("Motorista não encontrado."));
+
+        if(!motorist.getUser().getId().equals(userId)) {
+            throw new UnauthorizedItemDeletionException("Você não pode deletar um motorista que não seja você.");
+        }
+
+        motoristRepository.deleteById(motorist.getId());
+    }
+
+    public void editMotorist(CreateMotoristRequest newMotorist, Long motoristId, Long userId) {
+        var motorist = motoristRepository.findById(motoristId)
+                .orElseThrow(() -> new UserNotFoundException("Motorista não encontrado."));
+
+        if(!motorist.getUser().getId().equals(userId)) {
+            throw new UnauthorizedItemDeletionException("Você não pode editar um motorista que não seja você.");
+        }
+
+        var updatedMotorist = fromUpdateMotorist(motorist, newMotorist);
+
+        motoristRepository.save(updatedMotorist);
     }
 }

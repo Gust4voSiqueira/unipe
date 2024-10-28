@@ -9,9 +9,11 @@ import br.com.unipe.service.MotoristService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -61,6 +63,36 @@ public class MotoristController {
                     .getPrincipal();
 
             return ResponseEntity.ok().body(motoristService.isExistsCarRegistered(user.getId()));
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("delete/{idMotorist}")
+    public ResponseEntity deleteMotorist(@PathVariable Long idMotorist) {
+        try {
+            User user = (User) SecurityContextHolder.getContext()
+                    .getAuthentication()
+                    .getPrincipal();
+
+            motoristService.deleteMotorist(idMotorist, user.getId());
+
+            return ResponseEntity.ok().build();
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @PutMapping("edit/{idMotorist}")
+    public ResponseEntity editMotorist(@PathVariable Long idMotorist, @RequestBody CreateMotoristRequest newMotorist) {
+        try {
+            User user = (User) SecurityContextHolder.getContext()
+                    .getAuthentication()
+                    .getPrincipal();
+
+            motoristService.editMotorist(newMotorist, idMotorist, user.getId());
+
+            return ResponseEntity.ok().build();
         } catch (RuntimeException e) {
             throw new RuntimeException(e.getMessage());
         }
