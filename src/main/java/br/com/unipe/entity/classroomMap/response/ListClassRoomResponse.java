@@ -21,6 +21,7 @@ public class ListClassRoomResponse {
     @Setter
     @Builder
     private static class ListClassroom {
+        private Long id;
         private String discipline;
         private String day;
         private String classroom;
@@ -31,6 +32,7 @@ public class ListClassRoomResponse {
                 .stream()
                 .map(classroom -> ListClassroom
                         .builder()
+                        .id(classroom.getId())
                         .discipline(classroom.getDiscipline())
                         .day(classroom.getDay())
                         .classroom(classroom.getClassroom())

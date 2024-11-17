@@ -56,8 +56,12 @@ public class ClassroomMapService {
                 .orElseThrow(() -> new UserNotFoundException("Usuário não encontrado."));
         var isTeacher = user.getRole().equals(Role.ADMIN);
 
-        var classroomList = classroomRepository.findAll();
+        if(isTeacher) {
+            var classroomList = classroomRepository.findByTeacher(user);
+            return fromClassroomMap(true, classroomList);
+        }
 
-        return fromClassroomMap(isTeacher, classroomList);
+        var classroomList = classroomRepository.findAll();
+        return fromClassroomMap(false, classroomList);
     }
 }
