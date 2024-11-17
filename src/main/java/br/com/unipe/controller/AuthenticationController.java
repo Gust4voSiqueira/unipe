@@ -3,6 +3,7 @@ package br.com.unipe.controller;
 import br.com.unipe.entity.user.AuthenticationDTO;
 import br.com.unipe.entity.user.LoginResponseDTO;
 import br.com.unipe.entity.user.RegisterDTO;
+import br.com.unipe.entity.user.Role;
 import br.com.unipe.entity.user.User;
 import br.com.unipe.infra.security.TokenService;
 import br.com.unipe.repository.UserRepository;
@@ -39,12 +40,25 @@ public class AuthenticationController {
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
-    @PostMapping("register")
+    @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Valid RegisterDTO registerDTO) {
         if(Objects.nonNull(userRepository.findByEmail(registerDTO.email()))) return ResponseEntity.badRequest().build();
 
         var encryptedPassword = new BCryptPasswordEncoder().encode(registerDTO.password());
         var newUser = fromRegisterDTO(registerDTO, encryptedPassword);
+
+        userRepository.save(newUser);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/register/admin")
+    public ResponseEntity registerAdmin(@RequestBody @Valid RegisterDTO registerDTO) {
+        if(Objects.nonNull(userRepository.findByEmail(registerDTO.email()))) return ResponseEntity.badRequest().build();
+
+        var encryptedPassword = new BCryptPasswordEncoder().encode(registerDTO.password());
+        var newUser = fromRegisterDTO(registerDTO, encryptedPassword);
+        newUser.setRole(Role.ADMIN);
 
         userRepository.save(newUser);
 
