@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface ClassroomRepository extends JpaRepository<ClassroomMap, Long> {
     List<ClassroomMap> findByTeacher(User user);
+    List<ClassroomMap> findByCourse(String course);
 }

@@ -61,7 +61,7 @@ public class ClassroomMapService {
             return fromClassroomMap(true, classroomList);
         }
 
-        var classroomList = classroomRepository.findAll();
+        var classroomList = classroomRepository.findByCourse(user.getCourse());
         return fromClassroomMap(false, classroomList);
     }
 }

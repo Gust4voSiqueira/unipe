@@ -27,6 +27,7 @@ public class ClassroomMap {
     private Long id;
     private String classroom;
     private String discipline;
+    private String course;
     private String day;
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -38,6 +39,7 @@ public class ClassroomMap {
                 .discipline(registerClassroomRequest.getDiscipline())
                 .classroom(registerClassroomRequest.getClassroom())
                 .day(registerClassroomRequest.getDay())
+                .course(user.getCourse())
                 .teacher(user)
                 .build();
     }
