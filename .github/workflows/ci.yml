@@ -37,8 +37,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build Docker Image
-        run: docker build -t gustavosiq/unipe-ci-api:${{ steps.generate_tag.outputs.sha }} .
-
-      - name: Push Image
-        run: docker push gustavosiq/unipe-ci-api:${{ steps.generate_tag.outputs.sha }}
+      - name: Build and Push Docker
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: gustavosiq/unipe-ci-api:${{ steps.generate_tag.outputs.sha }},gustavosiq/unipe-ci-api:latest
