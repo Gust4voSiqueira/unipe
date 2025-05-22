@@ -16,11 +16,14 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'corretto' # See 'Supported distributions' for available options
+          distribution: 'corretto'
           java-version: '17'
 
       - name: Grant execute permission for Gradle wrapper
         run: chmod +x ./gradlew
 
-      - name: Build with Gradle
+      - name: Build Project
         run: ./gradlew clean build
+
+      - name: Build Docker Image
+        run: docker build -t unipe-ci-api:latest .
