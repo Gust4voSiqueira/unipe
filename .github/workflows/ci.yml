@@ -64,5 +64,5 @@ jobs:
           access-role-arn: arn:aws:iam::586202185639:role/app-runner-role
           region: us-east-2
           cpu: 1
-          memory: 1
+          memory: 2
           port: 8080
